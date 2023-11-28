@@ -28,4 +28,8 @@
     <ProjectReference Include="..\Jogos.Model\Jogos.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SQL\" />
+  </ItemGroup>
+
 </Project>
