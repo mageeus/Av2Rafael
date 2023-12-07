@@ -40,7 +40,7 @@ namespace Jogos.Model.Repositories
             _context.Set<T>().Remove(obj);
             if (_saveChanges)
             {
-             await   _context.SaveChangesAsync();
+             await _context.SaveChangesAsync();
             }
         }
 
@@ -63,6 +63,12 @@ namespace Jogos.Model.Repositories
         public async Task<T> SelecionarPkAsync(params object[] variavel)
         {
             var obj = await _context.Set<T>().FindAsync(variavel);
+            return obj;
+        }
+
+        public List<T> SelecionarTodos()
+        {
+            var obj = _context.Set<T>().ToList();
             return obj;
         }
 

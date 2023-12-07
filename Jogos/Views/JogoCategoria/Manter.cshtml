@@ -1,0 +1,116 @@
+﻿@using Jogos.ViewModel;
+@model Jogos.ViewModel.JogoCategoriaVM
+
+@{
+    ViewData["Title"] = "Jogos";
+}
+
+<h1>Manter</h1>
+
+<h4>JogoCategoriaVM</h4>
+<hr />
+<div class="rows">
+    <div class="col-md-4">
+        <form asp-action="Manter">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+
+                <input type="hidden" asp-for="JogoCategoriaId" class="form-control" />
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Jogo" class="control-label"></label>
+                <select class="form-select" id="txtJogo" asp-for="JogoId" asp-items="@ViewBag.JogoId">
+                    <option selected id="txtJogo" value="">Selecione um Jogo</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Categoria" class="control-label"></label>
+                <select class="form-select" id="txtCategoria" asp-for="CategoriaId" asp-items="@ViewBag.CategoriaId">
+                    <option selected value="">Selecione uma Categoria</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <button type="button" class="btn btn-primary adicionar">Adicionar</button>
+            </div>
+
+            <div>
+                <table id="tbJogos" class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Jogo
+                            </th>
+                            <th>
+                                Categoria
+                            </th>
+                        </tr>
+                    </thead>
+                    @{
+                        if (Model != null && Model.ListaJogoCategoria != null)
+                        {
+                            int contador = 0;
+                            foreach (var item in Model.ListaJogoCategoria)
+                            {
+                                <tr>
+                                    <td>
+                                        <input type="hidden" name="ListaJogoCategoria[@contador].JogoId" value="@item.JogoId" />
+                                        
+                                        @item.Jogo
+                                    </td>
+                                    <td>
+                                        <input type="hidden" name="ListaJogoCategoria[@contador].CategoriaId" value="@item.CategoriaId" />
+                                        
+                                        @item.Categoria
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger remover">Remover</button>
+                                    </td>
+
+
+                                </tr>
+                                contador += 1;
+                            }
+                        }
+                    }
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+ 
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(".remover").on("click", function () {
+            $(this).closest("tr").remove();
+        });
+
+        $("#tbJogos").on("click", ".remover", function () {
+            $(this).closest("tr").remove();
+        });
+
+        $(".adicionar").on("click", function (){
+            var contador = $("#tbJogos tbody tr").length;
+            var jogo =  $("#txtJogo option:selected").text();
+            var categoria = $("#txtCategoria option:selected").text();
+            var JogoId = $("#txtJogo").val();
+            var CategoriaId = $("#txtCategoria").val();
+            var linha = `<tr>`+
+                            `<td> <input type="hidden" name="ListaJogoCategoria[${contador}].JogoId" value=${JogoId} /> ${jogo}</td>` +
+                            `<td> <input type="hidden" name="ListaJogoCategoria[${contador}].CategoriaId" value=${CategoriaId} /> ${categoria}</td>` +
+                        `</tr>`
+            
+            console.log('jogo: ',jogo)
+            $("#tbJogos tbody").append(linha);
+        })
+
+    </script>
+}

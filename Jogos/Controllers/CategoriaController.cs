@@ -1,9 +1,11 @@
 ﻿using Jogos.Model.Models;
 using Jogos.Model.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Categorias.Controllers
 {
+    [Authorize]
     public class CategoriaController : Controller
     {
         private ServiceCategoria _ServiceCategoria;
